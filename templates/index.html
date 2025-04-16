@@ -4,85 +4,79 @@
     <meta charset="UTF-8">
     <title>Virtual Try-On</title>
     <style>
-        html, body {
+        body, html {
             margin: 0;
             padding: 0;
             height: 100%;
             overflow: hidden;
+            font-family: Arial, sans-serif;
         }
 
         #container {
             position: relative;
             width: 100vw;
             height: 100vh;
-            background: #497ff0;
         }
 
-        #video {
+        video, #result {
+            position: absolute;
+            top: 0;
+            left: 0;
             width: 100%;
             height: 100%;
-            object-fit: cover; /* чтобы камера заполняла экран */
-            border-radius: 0;
+            object-fit: cover;
+        }
+
+        video {
+            z-index: 1;
+        }
+
+        #result {
+            z-index: 2;
+            pointer-events: none;
         }
 
         .btn {
             position: absolute;
-            width: 120px;
-            height: 120px;
+            width: 80px;
+            height: 80px;
             border-radius: 50%;
-            border: 4px solid red;
             cursor: pointer;
-            z-index: 10;
+            opacity: 0.8;
+            z-index: 3;
+            border: 2px solid white;
         }
 
-        /* Кнопки футболок (слева) */
-        #shirt1 { left: 20px; top: 20%; background: red; border-color: chartreuse;}
-        #shirt2 { left: 120px; top: 40%; background: red; border-color: chartreuse;}
-        #shirt3 { left: 20px; top: 60%; background: red; border-color: chartreuse;}
+        #shirt1 { left: 10px; top: 20%; background-color: #1D7373; }
+        #shirt2 { left: 10px; top: 40%; background-color: #1D7373; }
+        #shirt3 { left: 10px; top: 60%; background-color: #1D7373; }
 
-        /* Кнопки штанов (справа) */
-        #pants1 { right: 20px; top: 20%; background: lightgreen; border-color: red; }
-        #pants2 { right: 120px; top: 40%; background: lightgreen; border-color: red; }
-        #pants3 { right: 20px; top: 60%; background: lightgreen; border-color: red; }
+        #pants1 { right: 10px; top: 20%; background-color: #269926; }
+        #pants2 { right: 10px; top: 40%; background-color: #269926; }
+        #pants3 { right: 10px; top: 60%; background-color: #269926; }
+
+        canvas {
+            display: none;
+        }
     </style>
 </head>
 <body>
     <div id="container">
-        <img id="video" src="/video" alt="Camera Stream">
-        
-        <!-- Футболки -->
-        <div id="shirt1" class="btn" onclick="changeShirt(0)"></div>
-        <div id="shirt2" class="btn" onclick="changeShirt(1)"></div>
-        <div id="shirt3" class="btn" onclick="changeShirt(2)"></div>
+        <video id="video" autoplay playsinline muted></video>
+        <canvas id="canvas"></canvas>
+        <img id="result" alt="Processed Frame" />
 
-        <!-- Штаны -->
-        <div id="pants1" class="btn" onclick="changePants(0)"></div>
-        <div id="pants2" class="btn" onclick="changePants(1)"></div>
-        <div id="pants3" class="btn" onclick="changePants(2)"></div>
+        <!-- Кнопки рубашек -->
+        <div id="shirt1" class="btn" onclick="changeShirt()"></div>
+        <div id="shirt2" class="btn" onclick="changeShirt()"></div>
+        <div id="shirt3" class="btn" onclick="changeShirt()"></div>
+
+        <!-- Кнопки штанов -->
+        <div id="pants1" class="btn" onclick="changePants()"></div>
+        <div id="pants2" class="btn" onclick="changePants()"></div>
+        <div id="pants3" class="btn" onclick="changePants()"></div>
     </div>
 
-    <script>
-        function changeShirt(index) {
-            fetch('/change_shirt', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ index })
-            });
-        }
-
-        function changePants(index) {
-            fetch('/change_pants', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ index })
-            });
-        }
-
-        // Автообновление кадра
-        setInterval(() => {
-            const video = document.getElementById("video");
-            video.src = "/video?" + Date.now(); // кэш-бастер
-        }, 1000);
-    </script>
+    <script src="/static/script.js"></script>
 </body>
 </html>
