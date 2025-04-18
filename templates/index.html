@@ -47,13 +47,23 @@
             border: 2px solid white;
         }
 
-        #shirt1 { left: 10px; top: 20%; background-color: #1D7373; }
-        #shirt2 { left: 10px; top: 40%; background-color: #1D7373; }
-        #shirt3 { left: 10px; top: 60%; background-color: #1D7373; }
+        #shirt1, #shirt2, #shirt3 {
+            left: 10px;
+            background-color: #1D7373;
+        }
 
-        #pants1 { right: 10px; top: 20%; background-color: #269926; }
-        #pants2 { right: 10px; top: 40%; background-color: #269926; }
-        #pants3 { right: 10px; top: 60%; background-color: #269926; }
+        #pants1, #pants2, #pants3 {
+            right: 10px;
+            background-color: #269926;
+        }
+
+        #shirt1 { top: 20%; }
+        #shirt2 { top: 40%; }
+        #shirt3 { top: 60%; }
+
+        #pants1 { top: 20%; }
+        #pants2 { top: 40%; }
+        #pants3 { top: 60%; }
 
         canvas {
             display: none;
@@ -65,18 +75,13 @@
         <video id="video" autoplay playsinline muted></video>
         <canvas id="canvas"></canvas>
         <img id="result" alt="Processed Frame" />
-
-        <!-- Кнопки рубашек -->
         <div id="shirt1" class="btn" onclick="changeShirt()"></div>
         <div id="shirt2" class="btn" onclick="changeShirt()"></div>
         <div id="shirt3" class="btn" onclick="changeShirt()"></div>
-
-        <!-- Кнопки штанов -->
         <div id="pants1" class="btn" onclick="changePants()"></div>
         <div id="pants2" class="btn" onclick="changePants()"></div>
         <div id="pants3" class="btn" onclick="changePants()"></div>
     </div>
-
     <script src="/static/script.js"></script>
 </body>
 </html>
